@@ -9,7 +9,9 @@
     "material": "PLA",
     "estado": "stock",
     "destacado": true,
-    "imagenes": [],
+    "imagenes": [
+      "img/productos/maceta-geometrica-low-poly-mud7sew1nsg6.webp"
+    ],
     "visible": true
   },
   {
