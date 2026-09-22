@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LL Print 3D — Impresión 3D a medida</title>
+  <meta name="description" content="LL Print 3D: productos impresos en 3D y pedidos personalizados. Decoración, gaming, hogar, repuestos y más.">
+  <meta name="theme-color" content="#050b1a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" id="bgGlow" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a href="#inicio" class="logo">
+      <span class="logo-mark">LL</span>
+      <span class="logo-text">Print <b>3D</b></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#proceso">Cómo trabajamos</a>
+      <a href="#personalizado">Pedido personalizado</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="cart-btn" id="cartBtn" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.5L21 8H6"/><circle cx="10" cy="20.5" r="1"/><circle cx="18" cy="20.5" r="1"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Menú"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-content">
+      <p class="eyebrow reveal">Impresión 3D · Diseño · A medida</p>
+      <h1 class="hero-title">
+        <span class="line"><span>Imprimimos</span></span>
+        <span class="line"><span>tus ideas</span></span>
+        <span class="line"><span class="grad">capa por capa.</span></span>
+      </h1>
+      <p class="hero-sub reveal" data-delay="3">Objetos, repuestos, regalos y piezas únicas impresas en 3D. Elegí del catálogo o mandanos tu idea y la hacemos realidad.</p>
+      <div class="hero-cta reveal" data-delay="4">
+        <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+        <a href="#personalizado" class="btn btn-ghost">Pedí el tuyo</a>
+      </div>
+      <div class="hero-stats reveal" data-delay="5">
+        <div><b data-count="0" id="statProductos">0</b><span>modelos</span></div>
+        <div><b>0.1<small>mm</small></b><span>precisión de capa</span></div>
+        <div><b>100<small>%</small></b><span>personalizable</span></div>
+      </div>
+    </div>
+    <a href="#marquee" class="scroll-hint" aria-label="Deslizar"><span></span></a>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" id="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Decoración</span><i>✦</i><span>Gaming</span><i>✦</i><span>Repuestos</span><i>✦</i><span>Llaveros</span><i>✦</i><span>Regalos</span><i>✦</i><span>Prototipos</span><i>✦</i><span>Hogar</span><i>✦</i><span>Maquetas</span><i>✦</i>
+      <span>Decoración</span><i>✦</i><span>Gaming</span><i>✦</i><span>Repuestos</span><i>✦</i><span>Llaveros</span><i>✦</i><span>Regalos</span><i>✦</i><span>Prototipos</span><i>✦</i><span>Hogar</span><i>✦</i><span>Maquetas</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- ============ CATÁLOGO ============ -->
+  <section class="section" id="catalogo">
+    <div class="section-head">
+      <p class="eyebrow reveal">Catálogo</p>
+      <h2 class="reveal" data-delay="1">Modelos que <span class="grad">ya imprimimos</span></h2>
+      <p class="reveal" data-delay="2">Todos los modelos se pueden hacer en otros colores o tamaños. Si no encontrás lo que buscás, pedilo personalizado.</p>
+    </div>
+    <div class="catalog-tools reveal" data-delay="2">
+      <div class="filters" id="filters"></div>
+      <label class="search">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="searchInput" placeholder="Buscar modelo...">
+      </label>
+    </div>
+    <div class="grid" id="productGrid"></div>
+    <p class="empty" id="emptyMsg" hidden>No encontramos modelos con ese filtro. <a href="#personalizado">¿Lo hacemos a medida?</a></p>
+  </section>
+
+  <!-- ============ PROCESO ============ -->
+  <section class="section process" id="proceso">
+    <div class="section-head">
+      <p class="eyebrow reveal">Cómo trabajamos</p>
+      <h2 class="reveal" data-delay="1">De la idea al objeto <span class="grad">en 4 pasos</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step-line" aria-hidden="true"><span id="stepLineFill"></span></div>
+      <article class="step reveal-left">
+        <span class="step-num">01</span>
+        <h3>Nos contás la idea</h3>
+        <p>Elegís un modelo del catálogo o nos mandás una foto, un boceto o un archivo STL.</p>
+      </article>
+      <article class="step reveal-right">
+        <span class="step-num">02</span>
+        <h3>Diseñamos y cotizamos</h3>
+        <p>Modelamos la pieza, ajustamos medidas y te pasamos precio y tiempo de entrega.</p>
+      </article>
+      <article class="step reveal-left">
+        <span class="step-num">03</span>
+        <h3>Imprimimos capa por capa</h3>
+        <p>Elegimos el material ideal (PLA, PETG, resina) y lo imprimimos con terminación cuidada.</p>
+      </article>
+      <article class="step reveal-right">
+        <span class="step-num">04</span>
+        <h3>Te lo entregamos</h3>
+        <p>Retiro o envío. Revisamos cada pieza antes de que llegue a tus manos.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PERSONALIZADO ============ -->
+  <section class="section custom" id="personalizado">
+    <div class="custom-wrap">
+      <div class="custom-info">
+        <p class="eyebrow reveal">Pedido personalizado</p>
+        <h2 class="reveal" data-delay="1">¿Tenés algo en mente? <span class="grad">Lo imprimimos.</span></h2>
+        <p class="reveal" data-delay="2">Completá el formulario con una imagen de referencia, las medidas y todos los detalles. Te respondemos con la cotización lo antes posible.</p>
+        <ul class="checks reveal" data-delay="3">
+          <li>Subí una foto, boceto o captura de lo que querés</li>
+          <li>Indicá medidas aproximadas (aunque sea a ojo)</li>
+          <li>Contanos color, material y para qué lo vas a usar</li>
+        </ul>
+        <div class="cube-scene reveal" data-delay="4" aria-hidden="true">
+          <div class="cube">
+            <div class="f f1"></div><div class="f f2"></div><div class="f f3"></div>
+            <div class="f f4"></div><div class="f f5"></div><div class="f f6"></div>
+          </div>
+        </div>
+      </div>
+
+      <form class="custom-form reveal-up" id="customForm" enctype="multipart/form-data" method="POST" target="formsubmitFrame" novalidate>
+        <div class="form-row">
+          <label class="field">
+            <span>Nombre *</span>
+            <input type="text" name="nombre" required placeholder="Tu nombre">
+          </label>
+          <label class="field">
+            <span>Teléfono / WhatsApp *</span>
+            <input type="tel" name="telefono" required placeholder="11 1234-5678">
+          </label>
+        </div>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" placeholder="opcional">
+        </label>
+
+        <label class="field">
+          <span>¿Qué querés que imprimamos? *</span>
+          <select name="tipo" required>
+            <option value="">Elegí una opción</option>
+            <option>Decoración / regalo</option>
+            <option>Figura / personaje</option>
+            <option>Repuesto o pieza técnica</option>
+            <option>Llaveros / souvenirs por cantidad</option>
+            <option>Logo / cartel / letras</option>
+            <option>Prototipo</option>
+            <option>Otro</option>
+          </select>
+        </label>
+
+        <div class="field">
+          <span>Imagen de referencia</span>
+          <label class="dropzone" id="dropzone">
+            <input type="file" name="attachment" id="fileInput" accept="image/*">
+            <div class="dz-empty" id="dzEmpty">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0-4 4m4-4 4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              <b>Arrastrá una imagen o hacé click</b>
+              <small>JPG, PNG o WEBP · hasta 5 MB</small>
+            </div>
+            <div class="dz-preview" id="dzPreview" hidden>
+              <img id="dzImg" alt="Vista previa">
+              <button type="button" class="dz-remove" id="dzRemove" aria-label="Quitar imagen">✕</button>
+            </div>
+          </label>
+        </div>
+
+        <div class="field">
+          <span>Medidas aproximadas (cm)</span>
+          <div class="dims">
+            <label><input type="number" name="ancho" min="0" step="0.1" placeholder="Ancho"><i>A</i></label>
+            <label><input type="number" name="alto" min="0" step="0.1" placeholder="Alto"><i>H</i></label>
+            <label><input type="number" name="profundidad" min="0" step="0.1" placeholder="Prof."><i>P</i></label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="field">
+            <span>Color / material</span>
+            <input type="text" name="color" placeholder="Ej: negro mate, PLA">
+          </label>
+          <label class="field">
+            <span>Cantidad</span>
+            <input type="number" name="cantidad" min="1" value="1">
+          </label>
+        </div>
+
+        <label class="field">
+          <span>¿Para cuándo lo necesitás?</span>
+          <input type="date" name="fecha">
+        </label>
+
+        <label class="field">
+          <span>Detalles *</span>
+          <textarea name="detalles" rows="4" required placeholder="Contanos todo: uso, terminación, texto a grabar, si va en varias piezas..."></textarea>
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          Enviar pedido
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </button>
+        <p class="form-note">Al enviar se abre WhatsApp con tu pedido armado. <b>Acordate de adjuntar la imagen en el chat.</b></p>
+      </form>
+      <iframe name="formsubmitFrame" hidden title="envío"></iframe>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="section contact" id="contacto">
+    <div class="contact-card reveal-up">
+      <div class="contact-glow" aria-hidden="true"></div>
+      <p class="eyebrow">Atención personalizada</p>
+      <h2>¿Preferís hablar <span class="grad">directo?</span></h2>
+      <p>Escribinos o llamanos y te asesoramos con tu pedido, materiales, tiempos y envíos.</p>
+      <a class="phone" id="phoneLink" href="#">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.8-1.6-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3M12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 0 1 12 2.2a9.8 9.8 0 0 1 9.8 9.8c0 5.4-4.4 9.8-9.8 9.8M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6A12 12 0 1 0 12 0"/></svg>
+        <span id="phoneText">+54 9 11 3841-1979</span>
+      </a>
+      <div class="contact-actions">
+        <a class="btn btn-primary" id="waBtn" href="#" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <a class="btn btn-ghost" id="callBtn" href="#">Llamar</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="logo"><span class="logo-mark">LL</span><span class="logo-text">Print <b>3D</b></span></div>
+    <p>© <span id="year"></span> LL Print 3D · Impresión 3D a medida</p>
+    <a id="igLink" href="#" target="_blank" rel="noopener" hidden>Instagram</a>
+  </footer>
+
+  <!-- WhatsApp flotante -->
+  <a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.4-1.5-.9-.8-1.5-1.8-1.6-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3M12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 0 1 12 2.2a9.8 9.8 0 0 1 9.8 9.8c0 5.4-4.4 9.8-9.8 9.8M12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6A12 12 0 1 0 12 0"/></svg>
+  </a>
+
+  <!-- Carrito -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="drawer" aria-label="Carrito">
+    <div class="drawer-head">
+      <h3>Tu pedido</h3>
+      <button class="icon-btn" id="drawerClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="drawer-body" id="cartItems"></div>
+    <div class="drawer-foot">
+      <div class="total"><span>Total estimado</span><b id="cartTotal">$0</b></div>
+      <button class="btn btn-primary btn-block" id="checkoutBtn">Confirmar por WhatsApp</button>
+      <p class="form-note">Te confirmamos stock, colores y envío por chat.</p>
+    </div>
+  </aside>
+
+  <!-- Modal producto -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="icon-btn modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+      <div class="modal-media" id="modalMedia"></div>
+      <div class="modal-info" id="modalInfo"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
